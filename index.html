@@ -56,11 +56,24 @@ const TZ='America/Asuncion',LAT=-22.55,LON=-55.73;let holidays=[];
 function nowPJC(){return new Date(new Date().toLocaleString('en-US',{timeZone:TZ}))}
 function tick(){const p=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date());document.getElementById('hh').textContent=p.find(x=>x.type==='hour').value;document.getElementById('mm').textContent=p.find(x=>x.type==='minute').value;document.getElementById('ss').textContent=p.find(x=>x.type==='second').value}tick();setInterval(tick,1000);
 async function weather(){try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m&hourly=temperature_2m&timezone=America%2FAsuncion&forecast_days=1`;const j=await(await fetch(u,{cache:'no-store'})).json();document.getElementById('temp').textContent=Math.round(j.current.temperature_2m)+'°C';const at=h=>{const i=j.hourly.time.findIndex(x=>x.endsWith('T'+String(h).padStart(2,'0')+':00'));return i>=0?Math.round(j.hourly.temperature_2m[i])+'°C':'--°C'};morning.textContent=at(9);afternoon.textContent=at(15);night.textContent=at(21)}catch(e){}}
-async function rates(){try{const j=await(await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL,BRL-PYG',{cache:'no-store'})).json();
-const paint=(key,current)=>{const prev=parseFloat(localStorage.getItem(key));let cls='fx-neutral';if(Number.isFinite(prev)){if(current<prev)cls='fx-up';else if(current>prev)cls='fx-down'}localStorage.setItem(key,String(current));return cls};
-if(j.USDBRL){const v=+j.USDBRL.bid;const cls=paint('pjc_usdbrl_prev',v);brlusd.innerHTML='US$ 1 = <span class="'+cls+'">R$ '+new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v)+'</span>'}
-if(j.BRLPYG){const v=+j.BRLPYG.bid;const cls=paint('pjc_brlpyg_prev',v);brlpyg.innerHTML='R$ 1 = <span class="'+cls+'">₲ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v)+'</span>'}
-}catch(e){}}
+async function rates(){
+ const paint=(key,current)=>{const prev=parseFloat(localStorage.getItem(key));let cls='fx-neutral';if(Number.isFinite(prev)){if(current<prev)cls='fx-up';else if(current>prev)cls='fx-down'}localStorage.setItem(key,String(current));return cls};
+ try{
+  const r=await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL',{cache:'no-store'}); if(!r.ok) throw new Error();
+  const j=await r.json(); if(j.USDBRL){const v=+j.USDBRL.bid,cls=paint('pjc_usdbrl_prev',v);brlusd.innerHTML='US$ 1 = <span class="'+cls+'">R$ '+new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v)+'</span>'}
+ }catch(e){console.error('Erro USD-BRL:',e)}
+ try{
+  let v;
+  try{
+   const r=await fetch('https://www.currencyexchangetool.com/api/v1/convert?amount=1&from=BRL&to=PYG&_='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error();
+   const j=await r.json(); v=Number(j.rate ?? j.result); if(!Number.isFinite(v)||v<=0) throw new Error();
+  }catch(e){
+   const r=await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/brl.json?_='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error();
+   const j=await r.json(); v=Number(j.brl&&j.brl.pyg); if(!Number.isFinite(v)||v<=0) throw new Error();
+  }
+  const cls=paint('pjc_brlpyg_prev',v);brlpyg.innerHTML='R$ 1 = <span class="'+cls+'">₲ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v)+'</span>';
+ }catch(e){console.error('Erro BRL-PYG:',e)}
+}
 async function loadHolidays(){try{const y=nowPJC().getFullYear();holidays=await(await fetch(`https://brasilapi.com.br/api/feriados/v1/${y}`,{cache:'no-store'})).json()}catch(e){holidays=[]}renderCalendar()}
 function renderCalendar(){const n=nowPJC(),y=n.getFullYear(),m=n.getMonth();month.textContent=n.toLocaleDateString('pt-BR',{month:'long',year:'numeric'}).toUpperCase();calendar.innerHTML=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'].map(x=>`<div class="head">${x}</div>`).join('');const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();for(let i=0;i<first;i++)calendar.innerHTML+='<div></div>';for(let d=1;d<=days;d++)calendar.innerHTML+=`<div class="${d===n.getDate()?'today':''}">${d}</div>`;const today=`${y}-${String(m+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;const up=holidays.filter(h=>h.date>=today).slice(0,2);holidayList.innerHTML='<div class="title">PRÓXIMOS FERIADOS (BRASIL)</div>'+(up.length?up.map(h=>`<div><span class="hdate">${h.date.slice(8,10)}/${h.date.slice(5,7)}</span>${h.name}</div>`).join(''):'<div>Nenhum feriado nacional restante.</div>')}
 async function news(){
