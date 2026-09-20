@@ -51,6 +51,88 @@
   letter-spacing: -.20vw !important;
 }
 </style>
+
+<style id="mobile-responsive-patch">
+/* Mantém o layout original em TV/desktop e adapta apenas telas menores */
+html, body { max-width: 100%; }
+
+@media (max-width: 900px) {
+  html, body {
+    width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    min-height: 100% !important;
+    overflow-x: hidden !important;
+  }
+
+  body {
+    transform: none !important;
+    zoom: 1 !important;
+  }
+
+  /* Contêineres principais passam a caber na largura do celular */
+  main, .container, .dashboard, .wrap, .wrapper, .app, #app {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Área superior: quebra os blocos quando necessário */
+  header, .header, .top, .topbar, .top-row, .cards, .info-row {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Relógio: reduz proporcionalmente sem estourar a tela */
+  .clock {
+    width: 100% !important;
+    max-width: 100vw !important;
+    font-size: clamp(72px, 20vw, 150px) !important;
+    letter-spacing: -0.055em !important;
+    line-height: .86 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .clock .seconds, .clock .sec, #seconds {
+    font-size: .47em !important;
+  }
+
+  /* Calendário e cartões não podem ultrapassar a tela */
+  .calendar, .calendar-card, .weather, .weather-card,
+  .currency, .currency-card, .exchange, .exchange-card {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  img, svg {
+    max-width: 100% !important;
+  }
+
+  /* Faixa de notícias legível no celular */
+  .ticker, .news-ticker, .breaking-news, .newsbar {
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Celulares em retrato: escala o painel original como uma tela única,
+   preservando a identidade visual sem corte horizontal. */
+@media (max-width: 600px) and (orientation: portrait) {
+  body {
+    font-size: 12px !important;
+  }
+
+  .clock {
+    font-size: clamp(64px, 19vw, 110px) !important;
+  }
+}
+</style>
+
 </head><body><main class="screen"><div class="top"><section class="weather"><div class="weatherHead"><div id="temp" class="temp">--°C</div><div class="city">PEDRO JUAN<br>CABALLERO</div></div><div class="forecast"><div class="period">MANHÃ<span class="ico">☀️</span><b id="morning">--°C</b></div><div class="period">TARDE<span class="ico">🌤️</span><b id="afternoon">--°C</b></div><div class="period">NOITE<span class="ico">🌙</span><b id="night">--°C</b></div></div></section><section class="rate"><div class="lbl">DÓLAR &nbsp;➡&nbsp; REAL</div><div class="pair"><div class="flagWrap"><span class="flag"><svg viewBox="0 0 741 390" xmlns="http://www.w3.org/2000/svg"><rect width="741" height="390" fill="#fff"/><g fill="#b22234"><rect width="741" height="30" y="0"/><rect width="741" height="30" y="60"/><rect width="741" height="30" y="120"/><rect width="741" height="30" y="180"/><rect width="741" height="30" y="240"/><rect width="741" height="30" y="300"/><rect width="741" height="30" y="360"/></g><rect width="296.4" height="210" fill="#3c3b6e"/><g fill="#fff" font-size="28" font-family="Arial"><text x="18" y="34">★ ★ ★ ★ ★</text><text x="35" y="68">★ ★ ★ ★</text><text x="18" y="102">★ ★ ★ ★ ★</text><text x="35" y="136">★ ★ ★ ★</text><text x="18" y="170">★ ★ ★ ★ ★</text><text x="35" y="204">★ ★ ★ ★</text></g></svg></span><div class="code">USD</div></div><div class="flagWrap"><span class="flag"><svg viewBox="0 0 720 504" xmlns="http://www.w3.org/2000/svg"><rect width="720" height="504" fill="#009b3a"/><path d="M360 50 660 252 360 454 60 252Z" fill="#ffdf00"/><circle cx="360" cy="252" r="105" fill="#002776"/><path d="M265 235 Q360 190 455 245" fill="none" stroke="#fff" stroke-width="13"/></svg></span><div class="code">BRL</div></div></div><div id="brlusd" class="val">US$ 1 = <span class="yellow">R$ --</span></div></section><section class="rate"><div class="lbl">REAL &nbsp;➡&nbsp; GUARANI</div><div class="pair"><div class="flagWrap"><span class="flag"><svg viewBox="0 0 720 504" xmlns="http://www.w3.org/2000/svg"><rect width="720" height="504" fill="#009b3a"/><path d="M360 50 660 252 360 454 60 252Z" fill="#ffdf00"/><circle cx="360" cy="252" r="105" fill="#002776"/><path d="M265 235 Q360 190 455 245" fill="none" stroke="#fff" stroke-width="13"/></svg></span><div class="code">BRL</div></div><div class="flagWrap"><span class="flag"><svg viewBox="0 0 600 330" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="110" fill="#d52b1e"/><rect width="600" height="110" y="110" fill="#fff"/><rect width="600" height="110" y="220" fill="#0038a8"/><circle cx="300" cy="165" r="34" fill="none" stroke="#d4af37" stroke-width="7"/><circle cx="300" cy="165" r="9" fill="#0038a8"/></svg></span><div class="code">PYG</div></div></div><div id="brlpyg" class="val">R$ 1 = <span class="yellow">₲ --</span></div></section><aside class="calendarBox"><div id="month" class="calTitle"></div><div id="calendar" class="cal"></div><div id="holidayList" class="holidayList"><div class="title">PRÓXIMOS FERIADOS (BRASIL)</div></div></aside></div><div class="clockWrap"><div class="clock"><span id="hh">--</span><span class="colon">:</span><span id="mm">--</span><span class="colon">:</span><span id="ss">--</span></div></div><div class="ticker"><div class="tickerTag"><span class="mainline">BRASIL</span></div><div class="tickerViewport"><div id="ticker" class="tickerText">Carregando notícias do Brasil...</div></div></div><div id="updated" class="updated">ATUALIZANDO...</div></main><script>
 const TZ='America/Asuncion',LAT=-22.55,LON=-55.73;let holidays=[];
 function nowPJC(){return new Date(new Date().toLocaleString('en-US',{timeZone:TZ}))}
