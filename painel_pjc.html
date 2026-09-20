@@ -1,0 +1,431 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Painel PJC</title><style>
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#000;color:#fff;font-family:Arial,Helvetica,sans-serif}.screen{position:relative;width:100vw;height:100vh;background:#000}.top{position:absolute;left:3.4vw;right:2.2vw;top:4.2vh;height:31vh;display:grid;grid-template-columns:22vw 21vw 21vw 1fr;column-gap:2.2vw;align-items:start}.weather{height:100%;border-right:0;padding-right:1.7vw}.weatherHead{display:flex;align-items:center;gap:1vw;white-space:nowrap}.temp{font-size:clamp(62px,6vw,112px);font-weight:600;line-height:.92}.city{font-size:clamp(11px,.82vw,15px);line-height:1.12;margin-top:0;color:#d7d7d7;letter-spacing:.04em}.forecast{display:grid;grid-template-columns:repeat(3,1fr);margin-top:3.2vh}.period{text-align:center;color:#ddd;font-size:clamp(13px,1.05vw,20px);border-right:1px solid #333;padding:0 .35vw}.period:last-child{border:0}.period .ico{display:block;font-size:clamp(30px,2.7vw,48px);line-height:1.15;margin:.5vh 0}.period b{font-size:clamp(20px,1.8vw,32px);font-weight:400}.rate{height:22vh;min-height:205px;border:0;border-radius:0;background:transparent;padding:1.2vh 1.7vw;text-align:center}.rate .lbl{font-size:clamp(18px,1.45vw,27px);font-weight:700;margin-bottom:1.2vh}.pair{display:grid;grid-template-columns:1fr 1fr;gap:2.4vw;align-items:start}.flagWrap{text-align:center}.flag{width:78px;height:50px;display:block;margin:0 auto 5px;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px #333}.flag svg{display:block;width:100%;height:100%}.code{font-size:clamp(16px,1.25vw,23px);color:#ddd;margin-top:.2vh}.val{font-size:clamp(27px,2.25vw,42px);font-weight:800;margin-top:1.1vh;white-space:nowrap}.val .yellow{color:#fff000}.fx-up{color:#26a7ff}.fx-down{color:#ff3030}.fx-neutral{color:#fff000}.calendarBox{justify-self:end;width:min(22vw,380px);height:42vh;min-height:390px;border:1px solid #363636;border-radius:8px;background:linear-gradient(145deg,#0b0b0b,#151515);padding:1.5vh 1.2vw}.calTitle{text-align:center;font-size:clamp(18px,1.45vw,27px);font-weight:800;text-transform:uppercase;margin-bottom:1.5vh}.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:.45vh .2vw;font-size:clamp(13px,1.05vw,19px)}.cal div{text-align:center;padding:.45vh 0}.cal .head{color:#ccc;font-size:clamp(11px,.9vw,16px)}.cal .today{background:#0789f5;border-radius:50%;width:2.35vw;height:2.35vw;min-width:30px;min-height:30px;display:flex;align-items:center;justify-content:center;justify-self:center}.holidayList{border-top:1px solid #444;margin-top:1.5vh;padding-top:1.2vh;font-size:clamp(12px,.95vw,17px);line-height:1.65}.holidayList .title{color:#bbb;font-weight:700;margin-bottom:.4vh}.hdate{color:#fff000;font-weight:800;display:inline-block;width:4.2vw}.clockWrap{position:absolute;left:0.5vw;top:38.5vh;width:76vw;height:36vh;display:flex;align-items:center;justify-content:center}.clock{font-family:"Oxanium", sans-serif;font-size:clamp(140px,16.3vw,305px);font-weight:900;letter-spacing:-0.85vw;line-height:.78;display:flex;align-items:center;font-variant-numeric:tabular-nums}.colon{margin:0 .85vw;text-shadow:0 0 14px rgba(255,255,255,.28)}#ss{font-size:.62em;font-weight:800;letter-spacing:-.35vw;align-self:flex-end;margin-left:.12vw;line-height:.82;transform:translateY(.03em)}@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:.1}}.ticker{position:absolute;left:0;right:0;bottom:8.2vh;height:8.6vh;min-height:68px;background:#f4f4f4;display:flex;align-items:stretch;overflow:hidden;border-top:5px solid #b40000;box-shadow:0 -5px 18px rgba(0,0,0,.58)}.ticker:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:#fff}.tickerTag{height:100%;min-width:14.5vw;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 1.35vw;font-family:Arial,Helvetica,sans-serif;font-weight:900;white-space:nowrap;background:linear-gradient(180deg,#d00000,#a90000);z-index:2;border-right:1px solid #7d0000;text-transform:uppercase;line-height:1}.tickerTag .topline{font-size:clamp(11px,.78vw,15px);letter-spacing:.12em;color:#fff;margin-bottom:.55vh;font-weight:700}.tickerTag .mainline{font-size:clamp(22px,1.72vw,33px);letter-spacing:-.025em;color:#fff}.tickerViewport{overflow:hidden;flex:1;height:100%;display:flex;align-items:center;background:#f5f5f5;border-bottom:5px solid #151515}.tickerText{font-family:"Arial Narrow","Roboto Condensed","Segoe UI",Arial,sans-serif;font-size:clamp(25px,1.88vw,37px);font-weight:800;letter-spacing:-.012em;white-space:nowrap;display:inline-block;animation:scroll 105s linear infinite;padding-left:14vw;color:#101010}.newsItem{display:inline-flex;align-items:center;margin-right:10vw}.newsLabel{font-weight:900;margin-right:1vw;padding:.28em .58em;font-size:.70em;letter-spacing:.045em;text-transform:uppercase;color:#fff!important;background:#171717;border-left:6px solid #b40000}.newsLabel.politica{border-left-color:#f0c400}.newsLabel.geo{border-left-color:#1677d2}.newsLabel.esporte{border-left-color:#159447}.newsBody{color:#111;text-shadow:none}.newsItem:after{content:"";width:7px;height:7px;border-radius:50%;background:#b40000;margin-left:10vw}.newsItem:last-child:after{display:none}@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}.updated{position:absolute;right:2.2vw;bottom:1.7vh;color:#666;font-size:clamp(11px,.9vw,16px);letter-spacing:.3px}@media(max-width:1100px){.top{grid-template-columns:24vw 21vw 21vw 1fr;column-gap:1.2vw}.calendarBox{width:25vw}.clockWrap{width:72vw}.clock{font-size:22vw}.rate{padding-left:1vw;padding-right:1vw}}
+</style><link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* Fonte escolhida para o relógio */
+.clock, .clock *, .time, .time *, .hora, .hora *,
+#clock, #clock *, #time, #time *, #hora, #hora *,
+.clock-main, .time-main, .hora-principal, .main-time {
+  font-family: "Oxanium", sans-serif !important;
+}
+</style>
+
+<style>
+/* Hora maior — Oxanium */
+.clock .main, .time .main, .hora .main,
+.clock-main, .time-main, .hora-principal, .main-time,
+#clock .main, #time .main, #hora .main {
+  font-size: clamp(92px, 10vw, 168px) !important;
+}
+</style>
+
+<style>
+/* Hora ainda maior — Oxanium */
+.clock .main, .time .main, .hora .main,
+.clock-main, .time-main, .hora-principal, .main-time,
+#clock .main, #time .main, #hora .main {
+  font-size: clamp(112px, 12vw, 198px) !important;
+}
+</style>
+
+<style>
+/* Hora extra grande — Oxanium */
+.clock .main, .time .main, .hora .main,
+.clock-main, .time-main, .hora-principal, .main-time,
+#clock .main, #time .main, #hora .main {
+  font-size: clamp(135px, 14.5vw, 235px) !important;
+  line-height: .84 !important;
+}
+</style>
+
+<style>
+/* Correção: aumenta o elemento REAL do relógio */
+.clock {
+  font-size: clamp(180px, 20vw, 380px) !important;
+  letter-spacing: -1.05vw !important;
+  line-height: .76 !important;
+}
+#ss {
+  font-size: .47em !important;
+  letter-spacing: -.20vw !important;
+}
+</style>
+
+
+<style id="ticker-red-container-fix">
+/* Faixa vermelha externa; conteúdo branco fica totalmente dentro dela */
+.ticker {
+  background: #b40000 !important;
+  border-top: 0 !important;
+  padding: 9px 0 !important;
+  align-items: stretch !important;
+}
+.ticker:before {
+  display: none !important;
+}
+.tickerTag {
+  margin: -9px 0 !important;
+  height: calc(100% + 18px) !important;
+}
+.tickerViewport {
+  height: 100% !important;
+  border-bottom: 0 !important;
+  background: #f5f5f5 !important;
+}
+</style>
+
+
+<style id="international-news-style">
+.newsLabel.internacional{border-left-color:#8e44ad}
+</style>
+
+<style id="cnn-youtube-panel-style">
+.cnnLiveBox{position:absolute;right:2.2vw;top:48vh;width:22vw;height:25vh;min-width:300px;min-height:180px;background:#000;border:1px solid #333;border-radius:7px;overflow:hidden;z-index:3}
+.cnnLiveHead{height:32px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#b40000;color:#fff;font:800 14px Arial,sans-serif;letter-spacing:.04em}
+.cnnLiveHead small{font-size:11px;font-weight:700;opacity:.9}.cnnLiveFrame{width:100%;height:calc(100% - 32px);border:0;display:block;background:#000}
+@media(max-width:1100px){.cnnLiveBox{right:2.2vw;width:25vw;min-width:0}}
+</style>
+</head><body><main class="screen"><div class="top"><section class="weather"><div class="weatherHead"><div id="temp" class="temp">--°C</div><div class="city">PEDRO JUAN<br>CABALLERO</div></div><div class="forecast"><div class="period">MANHÃ<span class="ico">☀️</span><b id="morning">--°C</b></div><div class="period">TARDE<span class="ico">🌤️</span><b id="afternoon">--°C</b></div><div class="period">NOITE<span class="ico">🌙</span><b id="night">--°C</b></div></div></section><section class="rate"><div class="lbl">DÓLAR &nbsp;➡&nbsp; REAL</div><div class="pair"><div class="flagWrap"><span class="flag"><svg viewBox="0 0 741 390" xmlns="http://www.w3.org/2000/svg"><rect width="741" height="390" fill="#fff"/><g fill="#b22234"><rect width="741" height="30" y="0"/><rect width="741" height="30" y="60"/><rect width="741" height="30" y="120"/><rect width="741" height="30" y="180"/><rect width="741" height="30" y="240"/><rect width="741" height="30" y="300"/><rect width="741" height="30" y="360"/></g><rect width="296.4" height="210" fill="#3c3b6e"/><g fill="#fff" font-size="28" font-family="Arial"><text x="18" y="34">★ ★ ★ ★ ★</text><text x="35" y="68">★ ★ ★ ★</text><text x="18" y="102">★ ★ ★ ★ ★</text><text x="35" y="136">★ ★ ★ ★</text><text x="18" y="170">★ ★ ★ ★ ★</text><text x="35" y="204">★ ★ ★ ★</text></g></svg></span><div class="code">USD</div></div><div class="flagWrap"><span class="flag"><svg viewBox="0 0 720 504" xmlns="http://www.w3.org/2000/svg"><rect width="720" height="504" fill="#009b3a"/><path d="M360 50 660 252 360 454 60 252Z" fill="#ffdf00"/><circle cx="360" cy="252" r="105" fill="#002776"/><path d="M265 235 Q360 190 455 245" fill="none" stroke="#fff" stroke-width="13"/></svg></span><div class="code">BRL</div></div></div><div id="brlusd" class="val">US$ 1 = <span class="yellow">R$ --</span></div></section><section class="rate"><div class="lbl">REAL &nbsp;➡&nbsp; GUARANI</div><div class="pair"><div class="flagWrap"><span class="flag"><svg viewBox="0 0 720 504" xmlns="http://www.w3.org/2000/svg"><rect width="720" height="504" fill="#009b3a"/><path d="M360 50 660 252 360 454 60 252Z" fill="#ffdf00"/><circle cx="360" cy="252" r="105" fill="#002776"/><path d="M265 235 Q360 190 455 245" fill="none" stroke="#fff" stroke-width="13"/></svg></span><div class="code">BRL</div></div><div class="flagWrap"><span class="flag"><svg viewBox="0 0 600 330" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="110" fill="#d52b1e"/><rect width="600" height="110" y="110" fill="#fff"/><rect width="600" height="110" y="220" fill="#0038a8"/><circle cx="300" cy="165" r="34" fill="none" stroke="#d4af37" stroke-width="7"/><circle cx="300" cy="165" r="9" fill="#0038a8"/></svg></span><div class="code">PYG</div></div></div><div id="brlpyg" class="val">R$ 1 = <span class="yellow">₲ --</span></div></section><aside class="calendarBox"><div id="month" class="calTitle"></div><div id="calendar" class="cal"></div><div id="holidayList" class="holidayList"><div class="title">PRÓXIMOS FERIADOS (BRASIL)</div></div></aside></div><div class="clockWrap"><div class="clock"><span id="hh">--</span><span class="colon">:</span><span id="mm">--</span><span class="colon">:</span><span id="ss">--</span></div></div><div class="cnnLiveBox"><div class="cnnLiveHead"><span>TV BRASIL</span><small>EBC • AO VIVO</small></div><iframe class="cnnLiveFrame" src="https://aovivo.ebc.com.br/embed-tvbrasil.html" title="TV BRASIL ao vivo - player oficial" loading="eager" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe></div>
+<div class="ticker"><div class="tickerTag"><span class="mainline">BRASIL</span></div><div class="tickerViewport"><div id="ticker" class="tickerText">Carregando notícias do Brasil...</div></div></div><div id="updated" class="updated">ATUALIZANDO...</div></main><script>
+const TZ='America/Asuncion',LAT=-22.55,LON=-55.73;let holidays=[];
+function nowPJC(){return new Date(new Date().toLocaleString('en-US',{timeZone:TZ}))}
+function tick(){const p=new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).formatToParts(new Date());document.getElementById('hh').textContent=p.find(x=>x.type==='hour').value;document.getElementById('mm').textContent=p.find(x=>x.type==='minute').value;document.getElementById('ss').textContent=p.find(x=>x.type==='second').value}tick();setInterval(tick,1000);
+async function weather(){try{const u=`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m&hourly=temperature_2m&timezone=America%2FAsuncion&forecast_days=1`;const j=await(await fetch(u,{cache:'no-store'})).json();document.getElementById('temp').textContent=Math.round(j.current.temperature_2m)+'°C';const at=h=>{const i=j.hourly.time.findIndex(x=>x.endsWith('T'+String(h).padStart(2,'0')+':00'));return i>=0?Math.round(j.hourly.temperature_2m[i])+'°C':'--°C'};morning.textContent=at(9);afternoon.textContent=at(15);night.textContent=at(21)}catch(e){}}
+async function rates(){
+ const paint=(key,current)=>{const prev=parseFloat(localStorage.getItem(key));let cls='fx-neutral';if(Number.isFinite(prev)){if(current<prev)cls='fx-up';else if(current>prev)cls='fx-down'}localStorage.setItem(key,String(current));return cls};
+ try{
+  const r=await fetch('https://economia.awesomeapi.com.br/json/last/USD-BRL',{cache:'no-store'}); if(!r.ok) throw new Error();
+  const j=await r.json(); if(j.USDBRL){const v=+j.USDBRL.bid,cls=paint('pjc_usdbrl_prev',v);brlusd.innerHTML='US$ 1 = <span class="'+cls+'">R$ '+new Intl.NumberFormat('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(v)+'</span>'}
+ }catch(e){console.error('Erro USD-BRL:',e)}
+ try{
+  let v;
+  try{
+   const r=await fetch('https://www.currencyexchangetool.com/api/v1/convert?amount=1&from=BRL&to=PYG&_='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error();
+   const j=await r.json(); v=Number(j.rate ?? j.result); if(!Number.isFinite(v)||v<=0) throw new Error();
+  }catch(e){
+   const r=await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/brl.json?_='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error();
+   const j=await r.json(); v=Number(j.brl&&j.brl.pyg); if(!Number.isFinite(v)||v<=0) throw new Error();
+  }
+  const cls=paint('pjc_brlpyg_prev',v);brlpyg.innerHTML='R$ 1 = <span class="'+cls+'">₲ '+new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0}).format(v)+'</span>';
+ }catch(e){console.error('Erro BRL-PYG:',e)}
+}
+async function loadHolidays(){try{const y=nowPJC().getFullYear();holidays=await(await fetch(`https://brasilapi.com.br/api/feriados/v1/${y}`,{cache:'no-store'})).json()}catch(e){holidays=[]}renderCalendar()}
+function renderCalendar(){const n=nowPJC(),y=n.getFullYear(),m=n.getMonth();month.textContent=n.toLocaleDateString('pt-BR',{month:'long',year:'numeric'}).toUpperCase();calendar.innerHTML=['DOM','SEG','TER','QUA','QUI','SEX','SÁB'].map(x=>`<div class="head">${x}</div>`).join('');const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();for(let i=0;i<first;i++)calendar.innerHTML+='<div></div>';for(let d=1;d<=days;d++)calendar.innerHTML+=`<div class="${d===n.getDate()?'today':''}">${d}</div>`;const today=`${y}-${String(m+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;const up=holidays.filter(h=>h.date>=today).slice(0,2);holidayList.innerHTML='<div class="title">PRÓXIMOS FERIADOS (BRASIL)</div>'+(up.length?up.map(h=>`<div><span class="hdate">${h.date.slice(8,10)}/${h.date.slice(5,7)}</span>${h.name}</div>`).join(''):'<div>Nenhum feriado nacional restante.</div>')}
+async function news(){
+ const feeds=[
+  ['POLÍTICA','https://agenciabrasil.ebc.com.br/rss/politica/feed.xml'],
+  ['GEOPOLÍTICA','https://agenciabrasil.ebc.com.br/rss/internacional/feed.xml'],
+  ['ESPORTE','https://agenciabrasil.ebc.com.br/rss/esportes/feed.xml']
+ ];
+ try{
+  const headlines=await Promise.all(feeds.map(async([label,feed,itemIndex=0])=>{
+   const api='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(feed);
+   const r=await fetch(api,{cache:'no-store'}); if(!r.ok) throw 0;
+   const j=await r.json(); const item=(j.items||[])[itemIndex];
+   if(!item) throw 0; return [label,item.title];
+  }));
+  const cls={"POLÍTICA":"politica","GEOPOLÍTICA":"geo","ESPORTE":"esporte","INTERNACIONAL":"internacional"};
+  ticker.innerHTML=headlines.map(([label,title])=>`<span class="newsItem"><span class="newsLabel ${cls[label]}">${label}:</span><span class="newsBody">${title}</span></span>`).join('')+`<span class="newsItem"><span class="newsBody">Fonte: Agência Brasil</span></span>`;
+ }catch(e){ticker.innerHTML='<span class="newsItem"><span class="newsLabel politica">POLÍTICA</span></span><span class="newsItem"><span class="newsLabel geo">GEOPOLÍTICA</span></span><span class="newsItem"><span class="newsLabel esporte">ESPORTE</span> — notícias temporariamente indisponíveis</span>'}
+}
+async function update(){await Promise.all([weather(),rates(),loadHolidays(),news()]);updated.textContent='ATUALIZADO EM '+new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).replace(',','')}update();setInterval(()=>Promise.all([weather(),rates(),loadHolidays()]).then(()=>{updated.textContent='ATUALIZADO EM '+new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).replace(',','')}),15*60*1000);setInterval(news,5*60*1000);setInterval(renderCalendar,60*1000);
+</script>
+<style id="mobile-safe-scale">
+@media (max-width: 900px) {
+  html {
+    background: #000 !important;
+    overflow: hidden !important;
+  }
+  body {
+    background: #000 !important;
+    margin: 0 !important;
+    transform-origin: top left !important;
+  }
+}
+</style>
+<script id="mobile-safe-scale-script">
+(function () {
+  function fitDashboard() {
+    if (window.innerWidth > 900) {
+      document.body.style.transform = '';
+      document.body.style.width = '';
+      document.body.style.height = '';
+      return;
+    }
+
+    /* The original dashboard was designed around a 1920x1080 canvas.
+       Scale the complete canvas so absolute-positioned elements stay visible. */
+    var designW = 1920;
+    var designH = 1080;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var scale = Math.min(vw / designW, vh / designH);
+
+    document.body.style.width = designW + 'px';
+    document.body.style.height = designH + 'px';
+    document.body.style.transformOrigin = 'top left';
+    document.body.style.transform = 'scale(' + scale + ')';
+  }
+
+  window.addEventListener('load', fitDashboard);
+  window.addEventListener('resize', fitDashboard);
+  window.addEventListener('orientationchange', function () {
+    setTimeout(fitDashboard, 150);
+  });
+})();
+</script>
+
+</body></html>
+
+<style id="tvbrasil-layout-final">
+/* Calendário mais compacto */
+.calendar{
+  height:34vh !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  padding-top:1.2vh !important;
+  padding-bottom:1vh !important;
+}
+.calendar h2{margin-top:0 !important;margin-bottom:.7vh !important;}
+.calGrid{row-gap:.25vh !important;}
+.holidays{margin-top:.7vh !important;padding-top:.6vh !important;}
+
+/* TV maior, encaixada entre calendário e faixa de notícias */
+.cnnLiveBox{
+  top:39.5vh !important;
+  height:39vh !important;
+  width:22vw !important;
+  right:2.2vw !important;
+  min-height:0 !important;
+}
+.cnnLiveBox iframe{
+  width:100% !important;
+  height:calc(100% - 32px) !important;
+  border:0 !important;
+}
+</style>
+
+<style id="layout-preferido-final">
+/* Formato escolhido: calendário completo em cima e TV 16:9 logo abaixo */
+.calendar{
+  top:4.2vh !important;
+  right:2.2vw !important;
+  width:22vw !important;
+  height:34vh !important;
+  min-height:0 !important;
+  overflow:visible !important;
+  padding-top:1.2vh !important;
+  padding-bottom:1vh !important;
+}
+.calendar h2{margin-top:0 !important;margin-bottom:.7vh !important;}
+.calGrid{row-gap:.25vh !important;}
+.holidays{margin-top:.7vh !important;padding-top:.6vh !important;}
+
+.cnnLiveBox{
+  position:absolute !important;
+  right:2.2vw !important;
+  top:40.0vh !important;
+  width:22vw !important;
+  height:auto !important;
+  aspect-ratio:16/9 !important;
+  min-width:0 !important;
+  min-height:0 !important;
+  overflow:hidden !important;
+  background:#000 !important;
+}
+.cnnLiveHead{
+  height:32px !important;
+  box-sizing:border-box !important;
+}
+.cnnLiveBox iframe{
+  display:block !important;
+  width:100% !important;
+  height:calc(100% - 32px) !important;
+  border:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  background:#000 !important;
+}
+</style>
+
+<style id="ajuste-calendario-tv-sem-redesign">
+/* Calendário: mesmo formato/largura, apenas um pouco mais baixo */
+.calendar{
+  height:31.5vh !important;
+  min-height:0 !important;
+  padding-top:1.0vh !important;
+  padding-bottom:.7vh !important;
+}
+.calendar h2{
+  margin-top:0 !important;
+  margin-bottom:.45vh !important;
+}
+.calGrid{
+  row-gap:.12vh !important;
+}
+.holidays{
+  margin-top:.4vh !important;
+  padding-top:.45vh !important;
+}
+
+/* TV: mesma largura/formato, apenas um pouco mais para baixo */
+.cnnLiveBox{
+  top:41.5vh !important;
+}
+</style>
+
+<style id="somente-descer-tv">
+.cnnLiveBox{
+  top:49.5vh !important;
+}
+</style>
+
+<style id="somente-aumentar-tv-vertical">
+.cnnLiveBox{
+  height:32vh !important;
+  aspect-ratio:auto !important;
+  overflow:hidden !important;
+}
+.cnnLiveBox iframe{
+  width:100% !important;
+  height:calc(100% - 32px) !important;
+  overflow:hidden !important;
+  border:0 !important;
+  display:block !important;
+}
+</style>
+
+<style id="ajuste-somente-tv-feriados">
+/* TV Brasil: termina antes da faixa de notícias, sem sobreposição */
+.cnnLiveBox{
+  height:27vh !important;
+  overflow:hidden !important;
+}
+.cnnLiveBox iframe{
+  height:calc(100% - 32px) !important;
+  overflow:hidden !important;
+}
+
+/* Feriados: somente fonte menor */
+.holidays,
+.holidays *{
+  font-size:0.72rem !important;
+  line-height:1.15 !important;
+}
+</style>
+
+<style id="somente-baixar-faixa-inferior">
+.ticker{
+  bottom:3.2vh !important;
+}
+</style>
+
+<style id="somente-posicionar-tv-entre-bordas">
+.cnnLiveBox{
+  top:46.5vh !important;
+  bottom:auto !important;
+}
+</style>
+
+<style id="somente-descer-tv-1cm">
+.cnnLiveBox{
+  top:50.3vh !important;
+}
+</style>
+
+<style id="somente-mais-1cm-tv">
+.cnnLiveBox{
+  top:54.1vh !important;
+}
+</style>
+
+<style id="somente-diminuir-borda-feriados">
+.calendar{
+  height:auto !important;
+  min-height:0 !important;
+  padding-bottom:.35vh !important;
+}
+.holidays{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+</style>
+
+<style id="borda-feriados-bem-proxima">
+.calendar{
+  padding-bottom:0.08vh !important;
+}
+.holidays{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+.holidays > *:last-child{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+</style>
+
+<style id="corrigir-borda-calendario-final">
+.calendar{
+  height:fit-content !important;
+  min-height:0 !important;
+  max-height:none !important;
+  padding-bottom:0 !important;
+}
+.holidays{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+.holidays > *:last-child{
+  margin-bottom:0 !important;
+}
+</style>
+
+<style id="calendario-altura-correta">
+.calendar{
+  height:max-content !important;
+  min-height:unset !important;
+  max-height:none !important;
+  padding-bottom:6px !important;
+  overflow:visible !important;
+}
+.holidays{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+.holidays > *:last-child{
+  margin-bottom:0 !important;
+}
+</style>
+
+<style id="correcao-real-borda-calendario">
+.calendarBox{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  padding-bottom:8px !important;
+}
+.holidayList{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+.holidayList > div:last-child{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+</style>
+
+<style id="somente-aumentar-tv-sem-rolagem">
+.cnnLiveBox{
+  height:32vh !important;
+  overflow:hidden !important;
+}
+.cnnLiveBox iframe{
+  width:100% !important;
+  height:calc(100% - 32px) !important;
+  border:0 !important;
+  overflow:hidden !important;
+  display:block !important;
+}
+</style>
