@@ -112,10 +112,10 @@ async function news(){
   ['ESPORTE','https://agenciabrasil.ebc.com.br/rss/esportes/feed.xml']
  ];
  try{
-  const headlines=await Promise.all(feeds.map(async([label,feed])=>{
+  const headlines=await Promise.all(feeds.map(async([label,feed,itemIndex=0])=>{
    const api='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(feed);
    const r=await fetch(api,{cache:'no-store'}); if(!r.ok) throw 0;
-   const j=await r.json(); const item=(j.items||[])[0];
+   const j=await r.json(); const item=(j.items||[])[itemIndex];
    if(!item) throw 0; return [label,item.title];
   }));
   const cls={"POLÍTICA":"politica","GEOPOLÍTICA":"geo","ESPORTE":"esporte","INTERNACIONAL":"internacional"};
