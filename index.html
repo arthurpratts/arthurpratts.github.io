@@ -117,7 +117,7 @@ async function news(){
   ticker.innerHTML=headlines.map(([label,title])=>`<span class="newsItem"><span class="newsLabel ${cls[label]}">${label}:</span><span class="newsBody">${title}</span></span>`).join('')+`<span class="newsItem"><span class="newsBody">Fonte: Agência Brasil</span></span>`;
  }catch(e){ticker.innerHTML='<span class="newsItem"><span class="newsLabel politica">POLÍTICA</span></span><span class="newsItem"><span class="newsLabel geo">GEOPOLÍTICA</span></span><span class="newsItem"><span class="newsLabel esporte">ESPORTE</span> — notícias temporariamente indisponíveis</span>'}
 }
-async function update(){await Promise.all([weather(),rates(),loadHolidays(),news()]);updated.textContent='ATUALIZADO EM '+new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).replace(',','')}update();setInterval(update,15*60*1000);setInterval(renderCalendar,60*1000);
+async function update(){await Promise.all([weather(),rates(),loadHolidays(),news()]);updated.textContent='ATUALIZADO EM '+new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).replace(',','')}update();setInterval(()=>Promise.all([weather(),rates(),loadHolidays()]).then(()=>{updated.textContent='ATUALIZADO EM '+new Intl.DateTimeFormat('pt-BR',{timeZone:TZ,day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()).replace(',','')}),15*60*1000);setInterval(news,5*60*1000);setInterval(renderCalendar,60*1000);
 </script>
 <style id="mobile-safe-scale">
 @media (max-width: 900px) {
