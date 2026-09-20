@@ -429,3 +429,32 @@ async function update(){await Promise.all([weather(),rates(),loadHolidays(),news
   display:block !important;
 }
 </style>
+
+<style id="painel-pjc-final">
+.calendarBox{
+  height:auto !important;
+  min-height:0 !important;
+  max-height:none !important;
+  padding-bottom:8px !important;
+}
+.holidayList{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+.holidayList > div:last-child{
+  margin-bottom:0 !important;
+  padding-bottom:0 !important;
+}
+.cnnLiveBox{
+  display:block !important;
+  height:32vh !important;
+  overflow:hidden !important;
+}
+.cnnLiveBox iframe{
+  display:block !important;
+  width:100% !important;
+  height:calc(100% - 32px) !important;
+  border:0 !important;
+  overflow:hidden !important;
+}
+</style>
